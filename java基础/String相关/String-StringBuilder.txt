@@ -1,0 +1,68 @@
+一、String和StringBuilder、StringBuffer的区别？
+
+
+	1.String类型是用final关键字修饰的。所以不能被继承，表示的字符串对象，只读不改。
+	
+	2.StringBuilder、StringBuffer 是java提供给开发人员操作字符串用的。
+	他们所表示的字符串对象，可以读取也可以修改。
+	
+	3.StringBuilder 是线程安全的，底层加了synchronize关键字、
+	   StringBuffef  线程非安全的，但是它效率比较高
+	   
+	   
+	   
+	   
+二、 +运算符与 StringBuilder、StringBuffer的append方法比较。
+
+	其实+运算符，底层也是使用StringBuilder类来操作的。
+	
+	但是有一些地方要注意，如果再for循环中使用 +
+
+	那么会造成创建很多个 StringBuilder对象
+	一般来说，StringBuilder效率会比+运算符高一些。（这个我没有去认证，哈哈）
+	
+
+三、 String中的 ==，equels比较。
+
+	这一段能够演变很多东西出来。我觉得只要掌握String字符串创建的方式，还有==是比较引用，而equels就已经重写，比较字符串的值。
+	
+	这里有一篇以供参考，https://www.cnblogs.com/alexlo/archive/2013/02/21/2920209.html
+	1.String  s1= "abc"; 
+	首先在字符串池中查找是否已经存在了值为"abc"的这么一个对象，
+	它的判断依据是String类equals(Object obj)方法的返回值。
+	如果有，则不再创建新的对象，直接返回已存在对象的引用
+	如果没有，则先创建这个对象，然后把它加入到字符串池中，再将它的引用返回。
+	返回的是常量池中的地址
+	
+	2.String  s2= new String("789");
+	这种情况会会创建一个对象，而且也会放到字符串池中。但是s2指向的是堆地址
+	
+	3.String s3="a"+"bc"
+	这里会创建三个对象。 “a” ,"bc" "abc".他们都会保存在字符串池中。
+	如果字符串池中已经存在“abc”，那么会返回字符串池中的引用
+	
+	
+	4. String a="123";
+	   String b="1";
+	   String c="23";
+	 
+	 String d=b+"23";
+	 这个时候， a==b 是false
+	 这个需要注意一下.
+	 原因可能是因为，如果有变量这样相加，是使用了StringBuidler
+	 
+	5.	    String a = new String(new char[] { 'a', 'b', 'c', 'd' });
+	        String b = a.intern();
+	        System.out.println(b==a);
+	        	        
+	        String a2 = new String("mmnn");
+	        String b2 = a2.intern();
+	        System.out.println(b2==a2);
+	 
+	  结果，true
+			false
+			
+		值得注意的是，new中放 char数组是不会放到常量池这种情况的。
+		intern()方法会返回字符串池中的引用。如果没有，就在字符串池创建一个，然后返回
+
+		

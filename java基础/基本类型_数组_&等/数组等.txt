@@ -1,0 +1,4 @@
+一、注意事项
+
+	数组没有length（）方法，用length属性的。
+	而Stirng是 length（）方法。
